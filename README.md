@@ -26,3 +26,5 @@ $ ./run.sh
 
 ## Demo
 Have fun [here](http://13.76.41.83:7100/)
+
+A brief summary of our experiments, their results and comparison with state-of-the-art models can be found in [Experiments_Summary.pdf](Experiments_Summary.pdf).
