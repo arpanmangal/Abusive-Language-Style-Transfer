@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Style Transfer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <style>
+    /* html, body {
+      height: 100%;
+    } */
+
+    body {
+      margin-bottom: 0px;
+    }
+
+    #footer {
+      position: relative;
+      height: 30px;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+
+      margin-bottom: 0px;
+    }
+
+    meter {
+      width: 100%;
+      /* height: 100%; */
+    }
+
+    meter::-webkit-meter-optimum-value,
+    meter::-webkit-meter-suboptimum-value,
+    meter::-webkit-meter-even-less-good-value {
+      transition: 0.5s width;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="jumbotron text-center">
+    <h1>Style Transfer: Saving the world from Abusive Language</h1>
+    <p>Rephrasing offensive sentences to non-offensive using style transfer techniques </p>
+  </div>
+
+  <div class="container">
+    <form action="/convert" method="POST" id="hate-form">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="hate">Enter your thoughts:</label>
+            <input type="text" class="form-control" id="hate" name="hate">
+            <!-- <input type="submit" value="Submit"> -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-2">Intermediate Language: </div>
+        <div class="col-sm-3">
+          <label class="radio-inline">
+            <input type="radio" name="mode" value="fr" checked>French
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="mode" value="hi">Hindi
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="mode" value="ru">Russian
+          </label>
+        </div>
+        <div class="col-sm-4"></div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-3">
+          <button type="submit" class="btn btn-primary btn-block" id="convert">Submit</button>
+        </div>
+        <!-- <div class="col-sm-1"></div> -->
+        <div class="col-sm-3">
+          <button type="reset" class="btn btn-danger btn-block">Reset</button>
+        </div>
+        <div class="col-sm-3"></div>
+      </div>
+
+      <br />
+      <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+          <meter low="50" high="70" max="100" optimum="20" id="hate-meter">B</meter>
+        </div>
+        <div class="col-sm-2"></div>
+      </div>
+      <div class="row" style="text-align:center">
+        <div class="col-sm-12">Hate Meter</div>
+      </div>
+
+      <br />
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="inter">Intermediate Representation:</label>
+            <input type="text" class="form-control" id="inter" name="inter" disabled>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="nohate">A better way:</label>
+          <input type="text" class="form-control" id="nohate" name="nohate" disabled>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <hr />
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <h3>Example 1</h3>
+        <pre id="try1">yeah . why the fuck do they think that was the right way to put that ?</pre>
+        <button type="button" class="btn btn-success" onclick="tryExample(1)">Try this!</button>
+      </div>
+      <div class="col-sm-4">
+        <h3>Example 2</h3>
+        <pre id="try2">less useless meetings and more actually getting shit done , i suppose .</pre>
+        <button type="button" class="btn btn-success" onclick="tryExample(2)"> Try this!</button>
+      </div>
+      <div class="col-sm-4">
+        <h3>Example 3</h3>
+        <pre
+          id="try3">it 's bigger in iceland and scandinavian culture , but they 're mostly white so we don 't bitch at them .</pre>
+        <button type="button" class="btn btn-success" onclick="tryExample(3)">Try this!</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <h3>Example 4</h3>
+        <pre id="try4">well , it 's the fucking headline .</pre>
+        <button type="button" class="btn btn-success" onclick="tryExample(4)">Try this!</button>
+      </div>
+      <div class="col-sm-4">
+        <h3>Example 5</h3>
+        <pre
+          id="try5">the people of bhutan do not choose to be dirt poor in order to fight climate change , that 's just retarded .</pre>
+        <button type="button" class="btn btn-success" onclick="tryExample(5)"> Try this!</button>
+      </div>
+      <div class="col-sm-4">
+        <h3>Example 6</h3>
+        <pre id="try6">he fucking blamed haiti for getting hit with an earthquake cnn . com</pre>
+        <button type="button" class="btn btn-success" onclick="tryExample(6)">Try this!</button>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <br />
+  <div id="footer">
+    <div class="col-sm-2 "></div>
+    <div class="col-sm-8 ">
+      <!-- <p class="text-center text-muted">© Copyright 2019, Arpan Mangal, Deepanshu Jindal</p> -->
+      <p class="text-muted"> Project Report can be found <a href="report.pdf" target="_blank"> here. </a> </p>
+      <p class="text-muted"> Complete code is available <a
+          href="https://github.com/arpanmangal/Abusive-Language-Style-Transfer" target="_blank"> here. </a> </p>
+      <p class="text-muted"> Credits: This work was done as part of <a
+          href="http://www.cse.iitd.ac.in/~mausam/courses/col772/spring2019/" target="_blank"> COL772: Natural Language
+          Processing - Spring 2019 </a> by <a href="https://github.com/arpanmangal" target="_blank">Arpan Mangal </a>
+        and <a href="http://www.cse.iitd.ac.in/~cs1160312/" target="_blank"> Deepanshu Jindal </a> </p>
+    </div>
+  </div>
+
+  <script>
+    $('#hate-form').submit((e) => {
+      e.preventDefault();
+
+      let form = $(this);
+
+      $.ajax({
+        type: "POST",
+        url: "/convert",
+        data: JSON.stringify({ 'sentence': $('input[name=hate]').val(), 'mode': $('input[name=mode]:checked', '#hate-form').val() }),
+        contentType: 'application/json',
+        success: function (resData, textStatus, jqXHR) {
+          $('input[name=nohate]').val(resData.final);
+          $('input[name=inter]').val(resData.intermediate);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          alert('Sorry some error occured');
+          console.log(textStatus);
+        }
+      });
+    });
+
+    let tryExample = (idx) => {
+      let exId = '#try' + idx;
+      let ex = $(exId).html();
+      $('#hate').val(ex);
+    }
+
+    // let counter = 0;
+    // $('input[name=hate]').on('keyup', function() {
+
+    //   console.log('e');
+    // });
+    let hateInput = '';
+    setInterval(() => {
+      // console.log($('input[name=mode]:checked', '#hate-form').val());
+      newInput = $('input[name=hate]').val();
+      if (newInput === hateInput) return;
+      hateInput = newInput;
+
+      $.ajax({
+        type: "POST",
+        url: "/classify",
+        data: JSON.stringify({ 'sentence': $('input[name=hate]').val() }),
+        contentType: 'application/json',
+        success: function (resData, textStatus, jqXHR) {
+          // let hateVal = (resData === '1') ? 80 : 20;
+          hateVal = parseFloat(resData) * 100;
+          // console.log (resData);
+          $('#hate-meter').val(hateVal);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        }
+      })
+    }, 800);
+
+  </script>
+</body>
+
+</html>

@@ -6,7 +6,7 @@ import re
 
 # Hate removal setup
 hate_re = re.compile("fuck up|fuck off|piss off|fucked up|jack asses")
-lexicon = open("converter/processedlexicon.dat").readlines()
+lexicon = open("model/processedlexicon.dat").readlines()
 lexicon = set([x.strip() for x in lexicon] + 
               [x.strip()+"ing" for x in lexicon] + 
               [x.strip()+"in" for x in lexicon])

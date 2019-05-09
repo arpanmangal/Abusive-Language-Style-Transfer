@@ -1,50 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Style Transfer</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+{% extends 'index.html' %}
+{% block content %}
 
-  <style>
-    /* html, body {
-      height: 100%;
-    } */
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-    body {
-      margin-bottom:0px;
-    }
+<style>
+meter {
+  width: 100%;
+  /* height: 100%; */
+}
 
-    #footer {
-      position: relative;
-      height: 30px;
-      bottom: 0px;
-      left: 0px;
-      right: 0px;
-      margin-bottom: 0px;
-    }
-
-    meter {
-      width: 100%;
-      /* height: 100%; */
-    }
-
-    meter::-webkit-meter-optimum-value, meter::-webkit-meter-suboptimum-value, meter::-webkit-meter-even-less-good-value {
-      transition: 0.5s width;
-    }
-
-
-  </style>
-
-</head>
-<body>
+meter::-webkit-meter-optimum-value, meter::-webkit-meter-suboptimum-value, meter::-webkit-meter-even-less-good-value {
+  transition: 0.5s width;
+}
+</style>
 
 <div class="jumbotron text-center">
   <h1>Style Transfer: Saving the world from Abusive Language</h1>
   <p>Rephrasing offensive sentences to non-offensive using style transfer techniques </p> 
-</div>
+</div>	
 
 <div class="container">
   <form action="/convert" method="POST" id="hate-form">
@@ -52,7 +27,7 @@
     <div class="col-sm-12">
         <div class="form-group">
           <label for="hate">Enter your thoughts:</label>
-          <input type="text" class="form-control" id="hate" name="hate">
+          <input type="text" class="form-control" id="hate" name="hate" placeholder="Enter the sentence you wish to analyse">
           <!-- <input type="submit" value="Submit"> -->
         </div>
     </div>
@@ -116,7 +91,8 @@
     </div>
   </form>
 </div>
-  
+
+
 <hr />
 <div class="container">
   <div class="row">
@@ -155,10 +131,6 @@
   </div>
 </div>
 <hr />
-<br />
-<div>
-  <p class="text-center text-muted" id="footer">© Copyright 2019, Arpan Mangal, Deepanshu Jindal</p>
-</div>
 
 <script>
   $('#hate-form').submit((e) => {
@@ -218,5 +190,27 @@
   }, 800);
 
 </script>
-</body>
-</html>
+
+				<!-- <p>
+				    <u><span style="font-size:22px;"></span></u></p>
+				<p> Usage instructions </p>
+
+				<form action="" method="post" name="query">
+					<p class="form form-reset">
+            Please enter your input:<br>
+            <input name="input_text" size="100" type="text" /></p>
+            <input name="submit_btn" type="submit" value="Submit" /></p>
+
+          </p>
+				</form> -->
+
+<br>
+<pre style="background-color: transparent; border: 0">
+</pre>
+{% endblock %}
+{% block proj_details %}
+        <p> Project Report can be found <a href="report.pdf" target="_blank"> here. </a> </p>
+        <p> Complete code is available <a href="https://github.com/arpanmangal/Abusive-Language-Style-Transfer" target="_blank"> here. </a> </p>
+        <p> Credits: This work was done as part of <a href="http://www.cse.iitd.ac.in/~mausam/courses/col772/spring2019/" target="_blank"> COL772: Natural Language Processing - Spring 2019 </a> by <a href="https://github.com/arpanmangal" target="_blank">Arpan Mangal </a> and <a href="http://www.cse.iitd.ac.in/~cs1160312/" target="_blank"> Deepanshu Jindal </a> </p>
+{% endblock %}
+
